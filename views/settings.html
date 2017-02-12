@@ -1,0 +1,151 @@
+<framify menu="true"  path="settings" url="/settings" title="settings" parent="false" icon="settings" controller="scrumCtrl" ></framify>
+
+<ion-content id="" scrollbar-x="false" scrollbar-y="false" style="padding-bottom:40px;" ng-init="islogedin()">
+  <div id="mainBar" class="bar bar-positive">
+    <h3>User Profile</h3>
+  </div><!-- End of mainBar -->
+  <br><br><br>
+  <div id="response"></div>
+
+  <div id="bodyContent">
+
+     <div id="editUserProfil" ng-show="editingUser">
+        <div class="list">
+          <label class="item item-input">
+            <span class="input-label">Firstname</span>
+            <input type="text" placeholder="e.g: Jonathan" ng-model="data.user.firstname">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">Lastname</span>
+            <input type="text" placeholder="e.g: Boaz" ng-model="data.user.lastname">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">Username</span>
+            <input type="text" placeholder="e.g: sboaj1321" ng-model="data.user.username">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">Select Picture</span>
+            <input type="file" ng-model="data.user.avatar">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="e.g: joeboaz@gmail.com" ng-model="data.user.address">
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label">Password</span>
+            <input type="password" placeholder="**********" ng-model="data.user.password">
+          </label>
+            
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Gender
+            </div>
+            <select ng-model="data.user.gender">
+              <option value="Male" selected>Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </label>
+
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Status
+            </div>
+            <select ng-model="data.user.usertatus">
+              <option value="admin">Administrator</option>
+              <option value="Development Team" selected>Development Team</option>
+              <option value="Product Owner">Product Owner</option>
+              <option value="Scrum Master">Scrum Master</option>
+            </select>
+          </label>
+          <!-- <json-formatter json="data.user" open="4"></json-formatter> -->
+          <div id="buttons" class="item">
+            <button class="button button-calm" ng-click="update('users',data.user,'response')">
+              Save Changes
+            </button>
+
+            <button type="reset" class="button button-assertive" ng-click="editUser()">
+              Cancel
+            </button>
+          </div>
+        </div> <!-- end of list div -->
+    </div><!-- end of edit userProfile div -->
+
+    <div id="userProfil" class="row" ng-hide="editingUser">
+      <div class="col col-center">
+        <div class="list card col-75">
+
+          <div class="item item-thumbnail">
+            <img class="full-image" src="pictureFromDB.jpg">
+          </div>
+
+          <div class="item item-body">
+            
+            <table>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>
+                  <label class="item item-input">
+                    <span class="input-label">Full Name </span>
+                  </label>
+                </td>
+                <td>
+                  User's full name
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="item item-input">
+                    <span class="input-label">Username </span>
+                  </label>
+                </td>
+                <td>
+                  username
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="item item-input">
+                    <span class="input-label">Address Email </span>
+                  </label>
+                </td>
+                <td>
+                  email address
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="item item-input">
+                    <span class="input-label">Status </span>
+                  </label>
+                </td>
+                <td>
+                  User's status
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button class="button button-calm" ng-click="editUser()">
+                    Edit Details
+                  </button>
+                </td>
+                <td>
+                </td>
+              </tr>
+              
+            </table>
+          </div>
+
+        </div>
+      </div> 
+    </div><!-- End of userprofile -->
+
+  </div><!-- End of body content -->
+</ion-content>

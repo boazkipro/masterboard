@@ -1,0 +1,42 @@
+<framify menu="false" path="scrum" url="/scrum" title="Scrum" parent="false" icon="enhanced_encryption" controller="scrumCtrl" ></framify>
+<ion-content id="homeBackground" scrollbar-x="false" scrollbar-y="false" style="padding-bottom:40px;" ng-init="islogedin()">
+	<div id="response"></div>
+	<div id="loginForm" class="panel col-md-3" ng-if="!logedin">
+		<div id="loginContent" class="list">
+      <label class="bar item bar-positive">
+        <h1 class="title">Sign In</h1>
+      </label>
+      <label class="item item-input">
+        <center><img src="../assets/img/scrumit_2.png"></center>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Username</span>
+        <input type="text" placeholder="Enter username here..." ng-model="data.login.username">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Password</span>
+        <input type="password" placeholder="Enter password here..." ng-model="data.login.password">
+      </label>
+      <label class="item item-input">
+        <span class="input">
+          <a href="#/register">Register here</a>
+          <a href="#" style="margin-left:20px">Recover Password</a>
+        </span>
+      </label>
+      <button class="button button-calm" style="top: 5px;" ng-if="data.login.username && data.login.password" ng-click="login()">
+        Log In
+      </button>
+      <button class="button button-assertive" style="top: 5px;" ng-if="data.login.username && data.login.password" ng-click="data.login.username=''; data.login.password=''">
+        Cancel
+      </button>
+      <br><br>
+    </div> 
+	</div><!-- End of login form -->
+  <div id="home" ng-if="logedin">
+    
+    <h1>WELCOME TO THE DEVs SCRUM DASHBOARD</h1>
+    <p>Go to the right sidebar to navigate through.</p>
+  </div> <!-- End of home page content -->
+
+<br><br>
+</ion-content>

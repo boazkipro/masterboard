@@ -1,0 +1,115 @@
+<framify menu="true" path="dashboard" url="/dashboard" title="Dashboard" parent="false" icon="view_column" controller="scrumCtrl" ></framify>
+
+<ion-content scrollbar-x="false" scrollbar-y="false" style="padding-bottom:40px;" ng-init="islogedin(); fetch('tasks', {projectid:storage.current_project} )">
+	<div id="mainBar" class="bar bar-positive">
+	    <h3>Dashboard</h3>
+	</div><!-- End of mainBar -->
+	<br><br>
+	 <div id="response"></div>
+	<div id="bodyContent">
+		<div id="dashboard" class="row responsive-md">
+			<div id="productBacklog" class="col panel panel-info">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">PRODUCT BACKLOG</h3>
+		  		</div>
+
+		  		<div class="panel-body" id="inproduct backlog" ng-drop="true" ng-drop-success="onDropCompleteInproductBacklog($data,$event)" style="min-height:540px;">
+		  			<!-- display tasks in the product backlog of the current sprint -->
+		  			<div class="dg" ng-drag="true" ng-drag-data="task" data-allow-transform="true" ng-repeat="task in fetched.tasks" ng-if="task.taskstatus == 'created'">
+		  				<div id="cardTitle" class="">
+		  					<center>{{task.title}}</center>
+		  				</div>
+		  				<hr>
+		  				<div id="cardBody">{{task.description}}</div>
+		  				<hr>
+		  				<div id="cardFooter">
+				            <i title="Delete Task" class="material-icons" ng-click="del('task', {taskid : task.taskid},'response', $index)">
+				              delete_forever
+				            </i>
+				        </div>
+		  			</div>
+
+		  		</div>
+				
+			</div> <!-- end of product backlog -->
+
+			<div id="sprint" class="col panel panel-warning">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">SPRINT BACKLOG</h3>
+		  		</div>
+
+		  		<div class="panel-body" id="insprint" ng-drop="true" ng-drop-success="onDropCompleteInSprint($data, $event)" style="min-height:540px;">
+						<!-- code for displaying task in the sprint backlog section fetched fromthe task table, and allow them to be draggable. -->
+						<div class="dg" ng-drag="true" ng-drag-data="task" data-allow-transform="true" ng-repeat="task in fetched.tasks" ng-if="task.taskstatus == 'in progress'">
+		  				<div id="cardTitle" class="">
+		  					<center>{{task.title}}</center>
+		  				</div>
+		  				<hr>
+		  				<div id="cardBody">{{task.description}}</div>
+		  				<hr>
+		  				<div id="cardFooter">
+
+				            <i title="Delete Task" class="material-icons" ng-click="del('task', {taskid : task.taskid},'response', $index)">
+				              delete_forever
+				            </i>
+				        </div>
+		  			</div>
+		  		</div>
+				
+			</div> <!-- end of sprint -->
+
+			<div id="blockers" class="col panel panel-danger">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">BLOCKERS/IMPEDIMENTS</h3>
+		  		</div>
+
+		  		<div class="panel-body" id="blocked" ng-drop="true" ng-drop-success="onDropCompleteInBlockers($data, $event)" style="min-height:540px;">
+						<!-- code to update the task status in the db if a task has been dropped here.
+						code to display list of cards/ task that have a blocked status in the db. -->
+						<div class="dg" ng-drag="true" ng-drag-data="task" data-allow-transform="true" ng-repeat="task in fetched.tasks" ng-if="task.taskstatus == 'blocked'">
+		  				<div id="cardTitle" class="">
+		  					<center>{{task.title}}</center>
+		  				</div>
+		  				<hr>
+		  				<div id="cardBody">{{task.description}}</div>
+		  				<hr>
+		  				<div id="cardFooter">
+
+				            <i title="Delete Task" class="material-icons" ng-click="del('task', {taskid : task.taskid},'response', $index)">
+				              delete_forever
+				            </i>
+				        </div>
+		  			</div>
+		  		</div>
+				
+			</div> <!-- end of blockers -->
+
+			<div id="done" class="col panel panel-success">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">DONE</h3>
+		  		</div>
+
+		  		<div class="panel-body" id="completed" ng-drop="true" ng-drop-success="onDropCompleteInDone($data, $event)" style="min-height:540px;">
+		  			<!-- code to display projects of the done status in the database
+					code to update the task status in the db if a task has been dropped here -->
+					<div class="dg" ng-drag="true" ng-drag-data="task" data-allow-transform="true" ng-repeat="task in fetched.tasks" ng-if="task.taskstatus == 'completed'">
+		  				<div id="cardTitle" class="">
+		  					<center>{{task.title}}</center>
+		  				</div>
+		  				<hr>
+		  				<div id="cardBody">{{task.description}}</div>
+		  				<hr>
+		  				<div id="cardFooter">
+
+				            <i title="Delete Task" class="material-icons" ng-click="del('task', {taskid : task.taskid},'response', $index)">
+				              delete_forever
+				            </i>
+				        </div>
+		  			</div>
+	  			</div>
+				
+			</div> <!-- end of done -->
+
+		</div><!-- end of dashboard -->
+	</div><!-- End of body contents -->
+</ion-content>

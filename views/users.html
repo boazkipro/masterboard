@@ -1,0 +1,178 @@
+ <framify menu="true" path="users" url="/users" title="Users" parent="false" icon="supervisor_account" controller="scrumCtrl" ></framify>
+<ion-content id="" scrollbar-x="false" scrollbar-y="false" style="padding-bottom:40px;" ng-init="islogedin()">
+  <div id="mainBar" class="bar bar-positive">
+    <h3>Users</h3>
+  </div><!-- End of mainBar -->
+  
+  <br><br><br>
+  
+  <div id="response"></div>
+
+  <div id="bodyContent">
+    <div ng-if="storage.user.userstatus=='admin'">
+      <button class="button button-calm icon-left ion-plus-round" ng-click="addUser()" ng-hide="addingUser || editingUser">Add User</button>
+    </div><!-- add user button section -->
+    <hr>
+    
+    <div class="users" ng-init="fetch('users')" ng-hide="addingUser || editingUser">
+      <div class="user col-md-3" ng-repeat="user in fetched.users">
+        <div class="list card">
+          <div class="item item-avatar">
+            <img src="{{user.avatar}}.jpg">
+            <h2>{{user.firstname | uppercase}}  {{user.lastname | uppercase}}</h2>
+             <span>{{user.userstatus}}</span>
+          </div>
+          <div class="item item-body">
+            <p>
+              Username: {{user.username}}
+            </p>
+            <p>
+              <a href="#" class="subdued">Performance: {{user.performance}}</a>
+            </p>
+          </div>
+          <div class="item item-divider">
+            <i title="Edit User" class="material-icons" ng-if="storage.user.userstatus=='admin'">
+              edit
+            </i>
+
+            <i title="Delete User" class="material-icons" ng-click="del('users', {userid : user.userid},'response', $index)" ng-if="storage.user.userstatus=='admin'">
+              delete_forever
+            </i>
+          </div>
+        </div>
+      </div>
+    </div> <!-- End of Users -->
+
+    <div id="addUser" class="row" ng-show="addingUser">
+
+      <div class="list col col-75">
+        <label class="item item-input">
+          <span class="input-label">Firstname</span>
+          <input type="text" placeholder="e.g: Jonathan" ng-model="data.users.firstname">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Lastname</span>
+          <input type="text" placeholder="e.g: Boaz" ng-model="data.users.lastname">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" placeholder="e.g: sboaj1321" ng-model="data.users.username">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="e.g: joeboaz@gmail.com" ng-model="data.users.address">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" placeholder="**********" ng-model="data.users.password">
+        </label>
+          
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Gender
+          </div>
+          <select ng-model="data.users.gender">
+            <option value="Male" selected>Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Status
+          </div>
+          <select ng-model="data.users.userstatus">
+            <option value="admin">Administrator</option>
+            <option value="Development Team" selected>Development Team</option>
+            <option value="Product Owner">Product Owner</option>
+            <option value="Scrum Master">Scrum Master</option>
+          </select>
+        </label>
+        <!-- <json-formatter json="data.users" open="4"></json-formatter> -->
+        <div id="buttons" class="item">
+          <span hidden>{{data.users.userid='undefined'}}</span>
+          <button class="button button-calm" ng-click="add('users',data.users,'response')">
+            Add User
+          </button>
+
+          <button type="reset" class="button button-assertive" ng-click="addUser()">
+            Cancel
+          </button>
+        </div>
+      </div> 
+    
+    </div><!-- End of addUser -->
+
+    <div id="editUser" ng-show="editingUser">
+
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Firstname</span>
+          <input type="text" placeholder="e.g: Jonathan" ng-model="data.users.firstname">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Lastname</span>
+          <input type="text" placeholder="e.g: Boaz" ng-model="data.users.lastname">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" placeholder="e.g: sboaj1321" ng-model="data.users.username">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" placeholder="e.g: joeboaz@gmail.com" ng-model="data.users.address">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" placeholder="**********" ng-model="data.users.password">
+        </label>
+          
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Gender
+          </div>
+          <select ng-model="data.users.gender">
+            <option value="Male" selected>Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Status
+          </div>
+          <select ng-model="data.users.userstatus">
+            <option value="Development Team" selected>Development Team</option>
+            <option value="Product Owner">Product Owner</option>
+            <option value="Scrum Master">Scrum Master</option>
+            <option value="admin">Admin</option>
+          </select>
+        </label>
+        <!-- <json-formatter json="data.users" open="4"></json-formatter> -->
+        <span hidden>{{data.users.extras = 'userid=\'user.userid\''}}</span>
+        <div id="buttons" class="item">
+          <button class="button button-calm icon-left ion-checkmark-round" ng-click="update('users',data.users,'response')">
+            Update
+          </button>
+
+          <button type="reset" class="button button-assertive icon-left ion-close-round" ng-click="editUser()">
+            Cancel
+          </button>
+        </div>
+      </div> 
+    
+    </div><!-- End of editUser -->
+
+  </div> <!-- End of body content -->
+
+  <br><br><br>
+
+</ion-content>

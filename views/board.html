@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html ng-app="scrumit" ng-controller="appController">
+<head >
+    <title>ngDraggable</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/ionic.min.css">
+    <link rel="stylesheet" href="../assets/css/angular-material.min.css">
+    <link rel="stylesheet" href="../assets/css/material-icons.css">
+    <link rel="stylesheet" href="../assets/css/material.min.css">
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/json-formatter.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/ionic.material.min.css">    
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /** {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        [ng-drag] {
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        [ng-drag] {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 0, 0, 0.5);
+            color: white;
+            text-align: center;
+            padding-top: 40px;
+            display: inline-block;
+            margin: 0 10px;
+            cursor: move;
+        }
+        ul.draggable-objects:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+        .draggable-objects li {
+            float: left;
+            display: block;
+            width: 120px;
+            height: 100px;
+        }
+        [ng-drag].drag-over {
+            border: solid 1px red;
+        }
+        [ng-drag].dragging {
+            opacity: 0.5;
+        }
+        [ng-drop] {
+            background: rgba(0, 255, 0, 0.5);
+            text-align: center;
+            width: 600px;
+            height: 200px;
+            padding-top: 90px;
+            display: block;
+            margin: 20px auto;
+            position: relative;
+        }
+        [ng-drop].drag-enter {
+            border: solid 5px red;
+        }
+        [ng-drop] span.title {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 20px;
+            margin-left: -100px;
+            margin-top: -10px;
+        }
+        [ng-drop] div {
+            position: relative;
+            z-index: 2;
+        }*/
+    </style>
+</head>
+<body ng-controller="scrumCtrl">
+
+	<div id="mainBar" class="bar bar-positive">
+	    <h3>Dashboard</h3>
+	</div><!-- End of mainBar -->
+	<br><br>
+
+	<div id="bodyContent">
+		<div id="dashboard" class="row responsive-md">
+			<div id="productBacklog" class="col panel panel-info">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">PRODUCT BACKLOG</h3>
+		  		</div>
+
+		  		<div class="panel-body" id="inproduct backlog" ng-drop="true" ng-drop-success="onDropComplete1($data,$event)" style="min-height:540px; max-height: 550px;">
+		  			<!-- display tasks in the product backlog of the current sprint -->
+		  			<div class="dg" ng-drag="true" ng-drag-data="obj" data-allow-transform="true" ng-repeat="task in fetched.tasks" ng-if="task.taskstatus == 'created'">
+		  				{{task.title}}
+		  			</div>
+
+		  			<div class="dg" ng-drag="true" ng-drag-data="obj" data-allow-transform="true">
+		  				<center>Task card</center>
+		  			</div>
+
+		  		</div>
+				
+			</div> <!-- end of product backlog -->
+
+			<div id="sprint" class="col panel panel-warning">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">SPRINT BACKLOG</h3>
+		  		</div>
+
+		  		<div class="panel-body" id="insprint" style="min-height:540px; max-height: 550px;">
+						<!-- code for displaying task in the sprint backlog section fetched fromthe task table, and allow them to be draggable. -->
+						<div class="dg" ng-drag="true" ng-drag-data="obj" data-allow-transform="true" ng-repeat="task in fetched.tasks" ng-if="task.taskstatus == 'in progress'">
+		  					{{task.title}}
+		  				</div>
+
+		  				<div class="dg" ng-drag="true" ng-drag-data="obj" data-allow-transform="true">
+			  				<center>Task card</center>
+			  			</div>
+		  		</div>
+				
+			</div> <!-- end of sprint -->
+
+			<div id="blockers" class="col panel panel-danger">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">BLOCKERS</h3>
+		  		</div>
+
+		  		<div class="panel-body" id="blocked" style="min-height:540px; max-height: 550px;">
+						<!-- code to update the task status in the db if a task has been dropped here.
+						code to display list of cards/ task that have a blocked status in the db. -->
+						<div class="dg" ng-drag="true" ng-drag-data="obj" data-allow-transform="true" ng-repeat="task in fetched.tasks" ng-if="task.taskstatus == 'blocked'">
+			  				{{task.title}}
+			  			</div>
+
+			  			<div class="dg" ng-drag="true" ng-drag-data="obj" data-allow-transform="true">
+			  				<center>Task card</center>
+			  			</div>
+
+		  		</div>
+				
+			</div> <!-- end of blockers -->
+
+			<div id="done" class="col panel panel-success">
+				<div class="panel-heading">
+		    		<h3 class="panel-title">DONE</h3>
+		  		</div>
+
+		  		<div class="panel-body" id="completed" style="min-height:540px; max-height: 550px;">
+		  			<!-- code to display projects of the done status in the database
+					code to update the task status in the db if a task has been dropped here -->
+					<div class="dg" ng-drag="true" ng-drag-data="obj" data-allow-transform="true" ng-repeat="task in fetched.tasks" ng-if="task.taskstatus == 'completed'">
+		  				{{task.title}}
+		  			</div>
+
+		  			<div class="dg" ng-drag="true" ng-drag-data="obj" data-allow-transform="true">
+			  			<center>Task card</center>
+			  		</div>
+	  			</div>
+				
+			</div> <!-- end of done -->
+
+		</div><!-- end of dashboard -->
+	</div><!-- End of body contents -->
+
+<!-- <div class="container">
+
+    <div class="row">
+        <h1>ngDraggable Example</h1>
+    </div>
+
+    <ul class="draggable-objects">
+        <li ng-if="true">
+            <div ng-drag="true" ng-drag-data="{name:'test'}" data-allow-transform="true">TEST</div>
+        </li>
+    </ul>
+
+    <hr/>
+    <div ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
+        <span class="title">Drop area #1</span>
+
+        <div ng-repeat="obj in droppedObjects1" ng-drag="true" ng-drag-data="obj"
+             ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}">
+            {{obj.name}}
+        </div>
+
+    </div>
+
+    <div ng-drop="true" ng-drop-success="onDropComplete2($data,$event)">
+        <span class="title">Drop area #2</span>
+
+        <div ng-repeat="obj in droppedObjects2" ng-drag="true" ng-drag-data="obj"
+             ng-drag-success="onDragSuccess2($data,$event)" ng-center-anchor="{{centerAnchor}}">
+            {{obj.name}}
+        </div>
+
+    </div>
+
+    <hr>
+
+
+</div>
+<footer style="margin-top:2000px;">footer</footer> -->
+
+
+ <!--jQuery Framework-->
+<script src="../assets/js/jquery.js"></script>
+
+<!--ionic & Basic Angular-->
+<script src="../assets/js/ionic.bundle.min.js"></script>
+<script src="../assets/js/angular-aria.min.js"></script>
+<script src="../assets/js/angular-messages.min.js"></script>
+
+<!--Api-Check & ngFormly-->
+<script src="../assets/js/api-check.min.js"></script>
+<script src="../assets/js/formly.min.js"></script>
+<script src="../assets/js/angular-formly-templates-ionic.min.js"></script>
+
+<!--Angular Material-->
+<script src="../assets/js/angular-material.min.js"></script>
+
+<!--Angular Storage-->
+<script src="../assets/js/ngStorage.min.js"></script>
+
+<!-- JSON-FORMATTER -->
+<script src="../assets/js/json-formatter.min.js"></script>
+
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/ionic.material.min.js"></script>
+<script src="/../assets/js/crypto.js"></script>
+<!-- ngDraggable -->
+<script src="/../assets/js/ngDraggable.js"></script>
+<script src="/../assets/js/main.ctrl.js"></script>
+
+<!-- <script src="application.js"></script> -->
+</body>
+</html>

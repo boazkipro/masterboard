@@ -1,0 +1,189 @@
+ <framify menu="true" path="projects" url="/projects" title="Projects" parent="false" icon="dashboard" controller="scrumCtrl" ></framify>
+<ion-content id="" scrollbar-x="false" scrollbar-y="false" style="padding-bottom:40px;" ng-init="islogedin()">
+  <div id="mainBar" class="bar bar-positive">
+    <h3>Project</h3>
+  </div><!-- End of mainBar -->
+  <br><br><br>
+  
+  <div id="response"></div>
+  
+  <div id="bodyContent">
+    
+    <div ng-if="storage.user.userstatus=='admin' || storage.user.userstatus=='project owner'">
+      <button class="button button-calm icon-left ion-plus-round" ng-click="isProject()" ng-hide="addingProject || addingTask">Add Project</button>
+    </div><!-- add project button section -->
+  
+    <hr>
+   
+    <div class="projects container-fluid" ng-init="fetch('projects')" ng-hide="addingProject || addingTask">
+      
+      <div class="project" style="min-height: 350px; margin-bottom: 30px;">
+        
+        <div class="card col-lg-3" ng-repeat="project in fetched.projects">
+         
+          <div class="item item-divider">
+            <center>{{project.title | uppercase}}</center>
+          </div>
+          
+          <hr>
+          
+          <div class="item item-text-wrap">
+            {{project.description}}
+            <p>progress bar</p>
+            <p>Time remaining</p>
+            <p>Status: {{project.projectstatus}}</p>
+          </div>
+          
+          <div class="item item-divider">
+            
+            <i title="Add Task" class="material-icons" ng-click="addTask(project.projectid)" ng-if="storage.user.userstatus=='admin' || storage.user.userstatus=='project owner'">
+              add_box
+            </i>
+
+            <i title="Open in Dashbord" class="material-icons" ng-click="setProject(project.projectid)">
+              view_column
+            </i>
+
+            <i title="Delete Project" class="material-icons" ng-click="del('projects', {projectid : project.projectid}, 'response', $index)" ng-if="storage.user.userstatus=='admin' || storage.user.userstatus=='project owner'">
+              delete_forever
+            </i>
+
+          </div>
+        
+        </div>
+      
+      </div> <!-- End of class project -->
+
+    </div> <!-- End of Projects -->
+    <br><br><br>
+    <div id="addProject" class="row" ng-show="addingProject">
+
+      <div class="list col-75">
+        <label class="item item-input">
+          <span class="input-label">Title</span>
+          <input type="text" placeholder="Type Project Title" ng-model="data.project.title">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Description</span>
+          <textarea placeholder="Type a brief description" ng-model="data.project.description"></textarea>
+          <!-- <input type="text" > -->
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Project Status
+          </div>
+          <select ng-model="data.project.projectstatus">
+            <option value="Pending" selected>Pending</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Completed">Completed</option>
+            <option value="Completed">Abandoned</option>
+          </select>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Project Color</span>
+          <input type="color" placeholder="colorPicker" ng-model="data.project.color">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Starting Date</span>
+          <input type="date" placeholder="" ng-model="data.project.startingdate">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Ending Date</span>
+          <input type="date" placeholder="" ng-model="data.project.endingdate">
+        </label>
+
+        <!-- <json-formatter json="data.users" open="4"></json-formatter> -->
+        <div id="buttons" class="item">
+          
+          <button class="button button-calm" ng-click="add('projects',data.project,'response')">
+            Submit
+          </button>
+
+          <button type="reset" class="button button-assertive" ng-click="isProject()">
+            Cancel
+          </button>
+          <!-- data.users={} -->
+        
+        </div>
+     
+      </div>
+    
+    </div><!-- End of addProject -->
+
+    <div id="addTask" class="row" ng-show="addingTask">
+   
+      <div class="list col-75">
+        
+        <label class="item item-input">
+          <span class="input-label">Title</span>
+          <input type="text" placeholder="Type Project Title" ng-model="data.task.title">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Description</span>
+          <textarea placeholder="Type a brief description" ng-model="data.task.description"></textarea>
+          <!-- <input type="text" > -->
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Task Status
+          </div>
+          <select ng-model="data.task.taskstatus">
+            <option value="created" selected>Created</option>
+            <option value="in progress">In Progress</option>
+            <option value="blocked">Blocked</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Project Id</span>
+          <input type="text" ng-model="data.task.projectid" value="{{}}">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">User Id</span>
+          <input type="text" ng-model="data.task.userid" value="{{}}">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Starting Date</span>
+          <input type="date" placeholder="" ng-model="data.task.startingdate">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Ending Date</span>
+          <input type="date" placeholder="" ng-model="data.task.endingdate">
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Reason</span>
+          <input type="text" placeholder="Type reason here" ng-model="data.task.reason">
+        </label>
+
+        <!-- <json-formatter json="data.users" open="4"></json-formatter> -->
+        <div id="buttons" class="item">
+          
+          <button class="button button-calm" ng-click="add('tasks',data.task,'response')">
+            Submit
+          </button>
+
+          <button type="reset" class="button button-assertive" ng-click="addTask()">
+            Cancel
+          </button>
+        
+        </div>
+     
+      </div>
+
+    </div><!-- End of addTask -->
+    
+  </div> <!-- End of bodyContent -->
+  
+</ion-content>
