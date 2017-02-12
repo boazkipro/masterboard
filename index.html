@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bixFrame" ng-controller="appController">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/ionic.min.css">
+    <link rel="stylesheet" href="assets/css/angular-material.min.css">
+    <link rel="stylesheet" href="assets/css/material-icons.css">
+    <link rel="stylesheet" href="assets/css/material.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/json-formatter.min.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/ionic.material.min.css">    
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{nav.title}}</title>
+    
+</head>
+
+
+<body id="body">
+   
+   <ion-side-menus>
+		
+		<ion-side-menu-content>
+			 <ion-nav-bar class="bar bar-positive">
+                
+                <ion-nav-buttons side="left">                    
+                    <div class="bar bar-header item-input-inset" ng-if="nav.hasFilters">
+                        <label for="" class="item-input-wrapper textbox-search">
+                            <i class="icon ion-ios7-search placeholder-icon" ></i>
+                            <input type="search" ng-model="nav.search" placeholder="Search">
+                        </label>                        
+                   </div>
+                   <!--<a data-tap-disabled="true" class="button button-icon icon positive outline" ng-click="openFilters(nav.hasFilters);" ng-class="{'ion-search':!nav.hasFilters, 'ion-close-circled': nav.hasFilters}"> </a>-->
+                   <a ng-click="$ionicGoBack()" style="font-size:2em;" class="button button-icon icon positive outline light pull-left ion-android-arrow-dropleft"></a>
+                </ion-nav-buttons>
+                
+                <ion-nav-title ng-show="!nav.hasFilters">
+                       {{ nav.title }}
+                </ion-nav-title>
+                
+                <ion-nav-buttons side="right">
+                   <button menu-toggle="right" class="button button-icon icon ion-navicon"ng-click="nav.right.toggle()" ></button>
+                </ion-nav-buttons>
+                    
+            </ion-nav-bar>
+            <br><br>
+            <ion-nav-view  animation="slide-left-right"></ion-nav-view>
+            
+		</ion-side-menu-content>
+        
+        <ion-side-menu side="right">
+            
+			<header class="bar bar-header bar-positive">
+                <h1 class="title">{{nav.alias}}</h1>
+            </header>
+            
+            <ion-content class="has-header">
+                
+                    <ul class="list">
+                        <a class="item dropdown-link dropdown-link--is-large" href="#{{link.url}}" ng-repeat="link in links" ng-show="link.menu == 'true' && ( link.parent == 'false' )">
+                           
+                            <i class="material-icons">{{link.icon}}</i>
+                            <span>{{link.title}}</span>
+                            
+                        </a>
+                        <!--<a class="item dropdown-link dropdown-link--is-large" href="#/admin" >
+                           <i class="material-icons">enhanced_encryption</i>
+                            <span>Admin Portal</span>
+                        </a>-->
+
+                        <div class="item dropdown-link dropdown-link--is-large" ng-click="logout()" >
+                           <i class="material-icons">exit_to_app</i>
+                            <span>Logout</span>
+                        </div>
+                    </ul>
+                
+            </ion-content>
+            
+		</ion-side-menu>
+           
+   </ion-side-menus>
+
+   <div class="bar bar-footer bar-default" style="height: 25px">
+      <div class="title">&copy;2016 ScrumIT | Boaz &amp; Jonathan</div>
+    </div>
+<br><br>
+</body>
+
+<!--FORFEITED IMPORTS [ ngRoute & MDL ] -->
+<!--<script src="assets/js/angular-route.min.js"></script>-->
+<!--<script src="assets/js/material.min.js"></script>-->
+
+<!--jQuery Framework-->
+<script src="assets/js/jquery.js"></script>
+
+<!--ionic & Basic Angular-->
+<script src="assets/js/ionic.bundle.min.js"></script>
+<script src="assets/js/angular-aria.min.js"></script>
+<script src="assets/js/angular-messages.min.js"></script>
+
+<!--Api-Check & ngFormly-->
+<script src="assets/js/api-check.min.js"></script>
+<script src="assets/js/formly.min.js"></script>
+<script src="assets/js/angular-formly-templates-ionic.min.js"></script>
+
+<!--Angular Material-->
+<script src="assets/js/angular-material.min.js"></script>
+
+<!--Angular Storage-->
+<script src="assets/js/ngStorage.min.js"></script>
+
+<!-- JSON-FORMATTER -->
+<script src="assets/js/json-formatter.min.js"></script>
+
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/ionic.material.min.js"></script>
+<script src="/assets/js/crypto.js"></script>
+<!-- ngDraggable -->
+<script src="/assets/js/socket.io.js"></script>
+<script src="/assets/js/ngDraggable.js"></script>
+
+<script src="application.js"></script>
+<script>
+   
+    // function allowDrop(ev) {
+    //         ev.preventDefault();
+    //     }
+    // function drag(ev) {
+    //         ev.dataTransfer.setData("text", ev.target.id);
+    //     }
+    // function drop(ev) {
+    //         ev.preventDefault();
+    //         var data = ev.dataTransfer.getData("text");
+    //         ev.target.appendChild(document.getElementById(data));
+
+    //         var destid = ev.target.id;
+    //         // ajax code for enabling the updateStatus query
+    //         // $.ajax({
+    //         //          type:'POST',
+    //         //          url:'updateStatus.jsp',
+    //         //          data: {data : data, dest : destid}
+    //         //     });
+    //     }
+  
+</script>
+</html>
