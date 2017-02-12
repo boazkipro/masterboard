@@ -1,0 +1,1 @@
+module.exports = angular.module('bixFrame', ['ionic','ngMaterial','ionic-material','formlyIonic','ngStorage','jsonFormatter','ngDraggable']); 

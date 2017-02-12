@@ -1,0 +1,57 @@
+ion-content {
+	background: url("../img/bg2.png");
+	background-size: cover;
+}
+
+#homeBackground {
+	background: url("../img/homeBackground.jpg");
+	background-size: cover;
+}
+
+#loginForm {
+	float: right;
+	margin: 50px;
+	background: white;
+	/*opacity: 0.6;
+	filter:alpha (opacity=60);*/
+}
+
+#bodyContent {
+	padding-left: 25px;
+
+}
+
+#mainBar {
+	text-align: center;
+	padding-left: 50px;
+}
+
+#mainBar h3 {
+	text-align: center;
+	/*padding-left: 50px;*/
+}
+
+.dg {
+	background: #4099f9;
+	border-radius: 10px;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+
+.dg:hover {
+	cursor: pointer;
+}
+
+.dg #cardTitle {
+	font-weight: bolder;
+}
+
+.dg #cardBody {
+	margin-top: 10px;
+	min-height: 50px;
+}
+
+.dg #cardFooter {
+	min-height: 30px;
+	margin-top: 10px;
+}

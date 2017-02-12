@@ -1,0 +1,1 @@
+angular.module('bixFrame', ['ngMaterial','ngStorage','jsonFormatter','ngDraggable']); 

@@ -1,0 +1,9 @@
+{	
+	"title" : "Dev Scrum Dashboard",
+	"alias": "Dev Scrum Menu",
+    "navbar": {
+            "title" : "Menu",
+	    "alias": "ScrumIT"
+    },
+    "version" : "0.0.0"
+}
